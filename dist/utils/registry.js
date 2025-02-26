@@ -1,10 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Registry = void 0;
 /************************************************************************************************************
  * registry.js - contains a wrapper for the REG command under Windows, which provides access to the registry
  */
 const iconv = require("iconv-lite");
-import * as path from 'path';
-import * as util from 'util';
-import { spawn } from 'child_process';
+const path = require("path");
+const util = require("util");
+const child_process_1 = require("child_process");
 /* imports */
 let log = function (info) {
     // console.log(info)
@@ -205,7 +208,7 @@ util.inherits(RegistryItem, Object);
  *     });
  *
  */
-export function Registry(options) {
+function Registry(options) {
     if (!(this instanceof Registry))
         return new Registry(options);
     /* private members */
@@ -266,6 +269,7 @@ export function Registry(options) {
     if (_arch && _arch != 'x64' && _arch != 'x86')
         throw new Error('illegal architecture specified (use x86 or x64)');
 }
+exports.Registry = Registry;
 /**
  * Registry hive key HKEY_LOCAL_MACHINE.
  * Note: For writing to this hive your program has to run with admin privileges.
@@ -357,7 +361,7 @@ Registry.prototype.values = function values(cb) {
         throw new TypeError('must specify a callback');
     let args = ['QUERY', this.path];
     pushArch(args, this.arch);
-    let proc = spawn(getRegExePath(), args, {
+    let proc = (0, child_process_1.spawn)(getRegExePath(), args, {
         cwd: undefined,
         env: process.env,
         stdio: ['ignore', 'pipe', 'pipe']
@@ -416,7 +420,7 @@ Registry.prototype.keys = function keys(cb) {
         throw new TypeError('must specify a callback');
     let args = ['QUERY', this.path];
     pushArch(args, this.arch);
-    let proc = spawn(getRegExePath(), args, {
+    let proc = (0, child_process_1.spawn)(getRegExePath(), args, {
         cwd: undefined,
         env: process.env,
         stdio: ['ignore', 'pipe', 'pipe']
@@ -483,7 +487,7 @@ Registry.prototype.get = function get(name, cb) {
     else
         args = args.concat(['/v', name]);
     pushArch(args, this.arch);
-    let proc = spawn(getRegExePath(), args, {
+    let proc = (0, child_process_1.spawn)(getRegExePath(), args, {
         cwd: undefined,
         env: process.env,
         stdio: ['ignore', 'pipe', 'pipe']
@@ -550,7 +554,7 @@ Registry.prototype.set = function set(name, type, value, cb) {
         args = args.concat(['/v', name]);
     args = args.concat(['/t', type, '/d', value, '/f']);
     pushArch(args, this.arch);
-    let proc = spawn(getRegExePath(), args, {
+    let proc = (0, child_process_1.spawn)(getRegExePath(), args, {
         cwd: undefined,
         env: process.env,
         stdio: ['ignore', 'pipe', 'pipe']
@@ -591,7 +595,7 @@ Registry.prototype.remove = function remove(name, cb) {
         throw new TypeError('must specify a callback');
     let args = name ? ['DELETE', this.path, '/f', '/v', name] : ['DELETE', this.path, '/f', '/ve'];
     pushArch(args, this.arch);
-    let proc = spawn(getRegExePath(), args, {
+    let proc = (0, child_process_1.spawn)(getRegExePath(), args, {
         cwd: undefined,
         env: process.env,
         stdio: ['ignore', 'pipe', 'pipe']
@@ -630,7 +634,7 @@ Registry.prototype.clear = function clear(cb) {
         throw new TypeError('must specify a callback');
     let args = ['DELETE', this.path, '/f', '/va'];
     pushArch(args, this.arch);
-    let proc = spawn(getRegExePath(), args, {
+    let proc = (0, child_process_1.spawn)(getRegExePath(), args, {
         cwd: undefined,
         env: process.env,
         stdio: ['ignore', 'pipe', 'pipe']
@@ -678,7 +682,7 @@ Registry.prototype.destroy = function destroy(cb) {
         throw new TypeError('must specify a callback');
     let args = ['DELETE', this.path, '/f'];
     pushArch(args, this.arch);
-    let proc = spawn(getRegExePath(), args, {
+    let proc = (0, child_process_1.spawn)(getRegExePath(), args, {
         cwd: undefined,
         env: process.env,
         stdio: ['ignore', 'pipe', 'pipe']
@@ -717,7 +721,7 @@ Registry.prototype.create = function create(cb) {
         throw new TypeError('must specify a callback');
     let args = ['ADD', this.path, '/f'];
     pushArch(args, this.arch);
-    let proc = spawn(getRegExePath(), args, {
+    let proc = (0, child_process_1.spawn)(getRegExePath(), args, {
         cwd: undefined,
         env: process.env,
         stdio: ['ignore', 'pipe', 'pipe']
