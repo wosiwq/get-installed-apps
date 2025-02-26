@@ -9,7 +9,7 @@
   },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
-  "type": "module",
+  "type": "commonjs",
   "exports": {
     ".": {
       "import": "./dist/index.js",
