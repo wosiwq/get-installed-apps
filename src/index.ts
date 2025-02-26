@@ -1,6 +1,6 @@
-import { getInstalledApps as macGetInstalledApps } from "./mac";
-import type { AppInfo } from "./win";
-import { getInstalledApps as winGetInstalledApps } from "./win";
+import { getInstalledApps as macGetInstalledApps } from "./mac.js";
+import type { AppInfo } from "./win.js";
+import { getInstalledApps as winGetInstalledApps } from "./win.js";
 
 export function getInstalledApps() {
   if (process.platform === "darwin") {

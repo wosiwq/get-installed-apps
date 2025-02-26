@@ -1,5 +1,5 @@
-const { getInstalledApps } = require("./dist/index");
+import { getWinInstalledApps } from "./dist/index.js";
 
-getInstalledApps().then((apps) => {
+getWinInstalledApps().then((apps) => {
   console.log(apps);
 });
